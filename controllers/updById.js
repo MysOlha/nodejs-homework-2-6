@@ -1,9 +1,8 @@
-const contacts = require("../models/contacts");
-const contactSchema = require("../schemas/validation");
+const { Contact, joiSchema } = require("../models/contacts");
 
 const updById = async (req, res, next) => {
   try {
-    const { error } = contactSchema.validate(req.body);
+    const { error } = joiSchema.validate(req.body);
     if (error) {
       res.status(400).json({
         status: "error",
@@ -13,7 +12,9 @@ const updById = async (req, res, next) => {
     }
 
     const { contactId } = req.params;
-    const changeContact = await contacts.updateContact(contactId, req.body);
+    const changeContact = await Contact.findByIdAndUpdate(contactId, req.body, {
+      new: true,
+    });
     res.json({
       status: "success",
       code: 200,
