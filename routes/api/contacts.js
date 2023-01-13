@@ -6,7 +6,7 @@ const {
   removeById,
   newContact,
   updById,
-  updFavorite,
+  updateStatusContact,
 } = require("../../controllers/index");
 
 const router = express.Router();
@@ -21,6 +21,6 @@ router.delete("/:contactId", removeById);
 
 router.put("/:contactId", updById);
 
-router.patch("/:contactId/favorite", updFavorite);
+router.patch("/:contactId/favorite", updateStatusContact);
 
 module.exports = router;

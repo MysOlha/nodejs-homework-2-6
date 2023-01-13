@@ -1,6 +1,6 @@
 const { Contact, joiSchemaFavorite } = require("../models/contacts");
 
-const updFavorite = async (req, res, next) => {
+const updateStatusContact = async (req, res, next) => {
   try {
     const { error } = joiSchemaFavorite.validate(req.body);
 
@@ -8,7 +8,7 @@ const updFavorite = async (req, res, next) => {
       res.status(400).json({
         status: "error",
         code: 400,
-        message: "missing fields",
+        message: "missing field favorite",
       });
     }
 
@@ -34,4 +34,4 @@ const updFavorite = async (req, res, next) => {
   }
 };
 
-module.exports = updFavorite;
+module.exports = updateStatusContact;
