@@ -9,13 +9,15 @@ const {
   updateStatusContact,
 } = require("../../controllers/index");
 
+const auth = require("../../midddlewars/auth");
+
 const router = express.Router();
 
-router.get("/", getAllContacts);
+router.get("/", auth, getAllContacts);
 
 router.get("/:contactId", getById);
 
-router.post("/", newContact);
+router.post("/", auth, newContact);
 
 router.delete("/:contactId", removeById);
 

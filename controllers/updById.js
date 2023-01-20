@@ -1,4 +1,5 @@
-const { Contact, joiSchema } = require("../models/contacts");
+const { Contact } = require("../models/contacts");
+const { joiSchema } = require("../schemas/joiContacts");
 
 const updById = async (req, res, next) => {
   try {

@@ -1,4 +1,6 @@
-const { Contact, joiSchemaFavorite } = require("../models/contacts");
+const { Contact } = require("../models/contacts");
+const {joiSchemaFavorite} = require('../schemas/joiContacts')
+
 
 const updateStatusContact = async (req, res, next) => {
   try {
