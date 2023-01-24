@@ -1,10 +1,13 @@
 const { User } = require("../../models/users");
+const gravatar = require("gravatar");
 const joiSchemaUsers = require("../../schemas/joiUsers");
 const bcrypt = require("bcrypt");
 
 const register = async (req, res, next) => {
   try {
     const { email, password } = req.body;
+
+    const avatarURL = gravatar.url(email);
 
     const users = await User.findOne({ email });
     if (users) {
@@ -29,12 +32,13 @@ const register = async (req, res, next) => {
 
     const hashPass = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 
-    await User.create({ email, password: hashPass });
+    await User.create({ email, password: hashPass, avatarURL });
     res.status(201).json({
       status: "success",
       code: 201,
       user: {
         email,
+        avatarURL,
       },
     });
   } catch (error) {
