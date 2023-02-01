@@ -1,3 +1,4 @@
+const { boolean } = require("joi");
 const { Schema, model } = require("mongoose");
 
 const userSchema = Schema({
@@ -19,6 +20,14 @@ const userSchema = Schema({
   avatarURL: {
     type: String,
     required: true,
+  },
+  verify: {
+    type: Boolean,
+    default: false,
+  },
+  verificationToken: {
+    type: String,
+    required: [true, "Verify token is required"],
   },
 });
 

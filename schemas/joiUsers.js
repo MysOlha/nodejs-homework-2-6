@@ -5,4 +5,8 @@ const joiSchemaUsers = Joi.object({
   email: Joi.string().required(),
 });
 
-module.exports = joiSchemaUsers;
+const joiSchemaEmail = Joi.object({
+  email: Joi.string().required(),
+});
+
+module.exports = { joiSchemaUsers, joiSchemaEmail };

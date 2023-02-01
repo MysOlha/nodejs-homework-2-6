@@ -1,13 +1,13 @@
 const { User } = require("../../models/users");
 const gravatar = require("gravatar");
-const joiSchemaUsers = require("../../schemas/joiUsers");
+const {joiSchemaUsers} = require("../../schemas/joiUsers");
 const bcrypt = require("bcrypt");
+const sendEmail = require("../../helpers/sendEmail");
+const { v4 } = require("uuid");
 
 const register = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-
-    const avatarURL = gravatar.url(email);
 
     const users = await User.findOne({ email });
     if (users) {
@@ -31,8 +31,22 @@ const register = async (req, res, next) => {
     }
 
     const hashPass = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+    const avatarURL = gravatar.url(email);
+    const verificationToken = v4();
+    await User.create({
+      email,
+      password: hashPass,
+      avatarURL,
+      verificationToken,
+    });
 
-    await User.create({ email, password: hashPass, avatarURL });
+    const mail = {
+      to: email,
+      subject: "User verification by email",
+      html: `<a href = "http://localhost3000/api/users/verify/:${verificationToken}" target="_blank">Press for verification your email :) </a>`,
+    };
+
+    await sendEmail(mail);
     res.status(201).json({
       status: "success",
       code: 201,

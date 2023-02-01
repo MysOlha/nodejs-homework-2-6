@@ -5,7 +5,9 @@ const {
   login,
   getCurrentUser,
   logout,
-  updAvatar
+  updAvatar,
+  verifyEmail,
+  resendVerifyEmail
 } = require("../../controllers/users/index");
 
 const auth = require("../../midddlewars/auth");
@@ -18,5 +20,7 @@ router.post("/login", login);
 router.get("/current", auth, getCurrentUser);
 router.post("/logout", auth, logout);
 router.patch("/avatars", auth, upload.single("avatar"), updAvatar);
+router.get("/verify/:verificationToken", verifyEmail);
+router.post("/verify", resendVerifyEmail);
 
 module.exports = router;
